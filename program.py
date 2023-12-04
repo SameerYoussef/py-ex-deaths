@@ -5,7 +5,7 @@ import numpy as np
 from scipy.stats import linregress
 
 # Specify the path to your .xlsx file
-xlsx_file_path = 'monthly-death-registrations-by-ethnicity-age-and-sex-january-2010-june-2023.xlsx'
+xlsx_file_path = 'Monthly-death-registrations-by-ethnicity-age-sex-Jan2010-Sep2023.xlsx'
 
 # Load the workbook
 workbook = openpyxl.load_workbook(xlsx_file_path)
@@ -45,7 +45,7 @@ for item in filtered_tuples:
     
 """Print a graph of deaths in NZ
 
-For all genders and ages, using a 12-month rolling average, and a linear trend line
+For all genders and ages, using a 3-year rolling average, and a linear trend line
 """
 
 # Extract years and counts
@@ -53,8 +53,9 @@ years_months = sorted(year_month_counts.keys())
 years = [ym[0] for ym in years_months]
 counts = [year_month_counts[ym] for ym in years_months]
 
-# Calculate the 12-month moving average
-moving_average = np.convolve(counts, np.ones(12)/12, mode='valid')
+# Calculate the 3-year moving average
+window_size = 6
+moving_average = np.convolve(counts, np.ones(window_size)/window_size, mode='valid')
 
 # Perform linear regression on the counts
 x = np.arange(len(years))
@@ -68,10 +69,12 @@ ax1.plot(x, counts, marker='o', linestyle='-', label='Counts', color='b')
 ax1.set_xlabel('Month/Year')
 ax1.set_ylabel('Count', color='b')
 
+ax1.plot(range(window_size - 1, len(years)), moving_average, linestyle='-', label='3-year Avg', color='r')
+
 # Create a second y-axis for the moving average
-ax2 = ax1.twinx()
-ax2.plot(range(11, len(years)), moving_average, linestyle='-', label='12-Month Avg', color='r')
-ax2.set_ylabel('12-Month Avg', color='r')
+# ax2 = ax1.twinx()
+# ax2.plot(range(window_size - 1, len(years)), moving_average, linestyle='-', label='3-year Avg', color='r')
+# ax2.set_ylabel('3-year Avg', color='r')
 
 # Plot the linear trendline
 linear_trend = [slope * i + intercept for i in x]
@@ -89,9 +92,9 @@ ax1.set_xticks(x)
 ax1.set_xticklabels(labels)
 
 # Set the title and legends
-plt.title('Yearly Counts with 12-Month Moving Average and Linear Trend')
+plt.title('Yearly Counts with 3-year Moving Average and Linear Trend')
 ax1.legend(loc='upper left')
-ax2.legend(loc='upper right')
+# ax2.legend(loc='upper right')
 
 # Show the plot
 plt.grid()
