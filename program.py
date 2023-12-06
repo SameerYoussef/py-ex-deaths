@@ -92,7 +92,7 @@ ax1.set_xticks(x)
 ax1.set_xticklabels(labels)
 
 # Set the title and legends
-plt.title('Yearly Counts with 3-year Moving Average and Linear Trend')
+plt.title('Monthly Counts with 3-year Moving Average and Linear Trend')
 ax1.legend(loc='upper left')
 # ax2.legend(loc='upper right')
 
