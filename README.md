@@ -22,4 +22,4 @@ python program.py
 
 ## Output
 
-![](https://github.com/SameerYoussef/py-ex-deaths/assets/18099038/2b12d36e-d5e9-4cf1-b221-d94c691523ec)
+![monthly-counts](https://github.com/SameerYoussef/py-ex-deaths/assets/18099038/efb03cd9-358d-4a9a-82b5-114d1adb8635)
